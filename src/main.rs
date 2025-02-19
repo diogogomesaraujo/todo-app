@@ -1,5 +1,6 @@
 use actix_web::body::BoxBody;
 use actix_web::http::header::ContentType;
+use actix_web::web::Data;
 use actix_web::{
     delete, get, post, put, web, App, HttpRequest, HttpResponse, HttpServer, Responder,
 };
@@ -86,6 +87,31 @@ async fn delete_task(id: web::Path<u32>, data: web::Data<AppState>) -> impl Resp
     }
 }
 
+//edit content of task
+#[put("/tasks/{i}")]
+async fn edit_task_content(
+    id: web::Path<u32>,
+    req: web::Json<String>,
+    data: web::Data<AppState>,
+) -> impl Responder {
+    let task_id: u32 = *id;
+    let mut tasks = data.tasks.lock().unwrap();
+
+    let i: Option<usize> = tasks.iter().position(|t| task_id == t.id);
+
+    match i {
+        Some(i) => {
+            tasks[i].content = req.into_inner();
+            HttpResponse::Ok()
+                .content_type(ContentType::json())
+                .body(format!("Edited with success!"))
+        }
+        None => HttpResponse::NotFound()
+            .content_type(ContentType::json())
+            .body(format!("Couldn't find the task with id {}", task_id)),
+    }
+}
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     let app_state = web::Data::new(AppState {
@@ -103,6 +129,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_tasks)
             .service(add_task)
             .service(delete_task)
+            .service(edit_task_content)
     })
     .bind(("127.0.0.1", 8080))?
     .run()
