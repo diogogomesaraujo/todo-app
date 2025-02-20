@@ -16,11 +16,20 @@ body {
 
 #buttons {
     width: 400px;
-    text-align: left;
+    text-align: center;
     font-size: x-large;
     color: white;
     display: flex;
     flex-direction: column;
+}
+
+#input {
+    color: black;
+    font-size: x-large;
+    border-radius: 10px;
+    border-color: purple;
+    border-width: 3px;
+    padding: 10px;
 }
 
 #buttons button {
@@ -40,12 +49,20 @@ body {
     text-align: center;
 }
 
-#task {
+#buttons task {
     font-size: x-large;
     text-align: center;
     margin-bottom: 2vh;
 }
 
+#add_task {
+    background-color: green;
+}
+
+#remove_task {
+    background-color: red;
+}
+
 #padding {
-    padding-bottom: 5vh;
+    padding-bottom: 4vh;
 }
