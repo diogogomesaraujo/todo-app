@@ -27,21 +27,23 @@ body {
     color: black;
     font-size: x-large;
     border-radius: 10px;
-    border-color: purple;
+    border-color: grey;
     border-width: 3px;
     padding: 10px;
 }
 
 #buttons button {
-    color: black;
+    color: white;
     font-size: x-large;
     border-radius: 10px;
-    border-width: 0px;
+    border-width: 2px;
+    border-color: grey;
+    background-color: transparent;
     padding: 10px;
 }
 
 #buttons button:hover {
-    opacity: 0.9;
+    opacity: 0.8;
     cursor: pointer;
 }
 
@@ -53,14 +55,6 @@ body {
     font-size: x-large;
     text-align: center;
     margin-bottom: 2vh;
-}
-
-#add_task {
-    background-color: green;
-}
-
-#remove_task {
-    background-color: red;
 }
 
 #padding {

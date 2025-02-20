@@ -96,7 +96,8 @@ pub fn Hero() -> Element {
             div {
                 {
                     rsx!(
-                        {tasks.iter().map(|item| rsx! {
+                        {
+                            tasks.iter().map(|item| rsx! {
                             div { id: "buttons",
                                 a { id: "task", strong { "{item.id}." }, "   {item.content}" }
                             }
@@ -114,9 +115,10 @@ pub fn Hero() -> Element {
                         spawn(async move {
                             println!("Added Task: {}", task_text);
                             add_task(task_text.to_string()).await;
+                            get_tasks().await;
                         });
                     },
-                    id: "add_task", "Add a Task",
+                    "➕ Add a Task",
                 },
                 Padding {}
                 button {
@@ -125,9 +127,10 @@ pub fn Hero() -> Element {
                         spawn(async move {
                             println!("Added Task: {}", task_text);
                             remove_task(task_text.to_string()).await;
+                            get_tasks().await;
                         });
                     },
-                    id: "remove_task", "Remove a Task",
+                    "➖ Remove a Task",
                 }
             }
         }
