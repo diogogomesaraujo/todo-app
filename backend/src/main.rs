@@ -1,3 +1,4 @@
+use actix_cors::Cors;
 use actix_web::body::BoxBody;
 use actix_web::http::header::ContentType;
 use actix_web::{
@@ -143,16 +144,24 @@ async fn main() -> std::io::Result<()> {
         }]),
     });
 
+    println!("Server live on: http://127.0.0.1:3000");
+
     HttpServer::new(move || {
         App::new()
             .app_data(app_state.clone())
+            .wrap(
+                Cors::default()
+                    .allow_any_header()
+                    .allow_any_origin()
+                    .allow_any_method(),
+            )
             .service(get_tasks)
             .service(add_task)
             .service(delete_task)
             .service(edit_task)
             .service(invert_task_check)
     })
-    .bind(("127.0.0.1", 8080))?
+    .bind(("127.0.0.1", 3000))?
     .run()
     .await
 }
